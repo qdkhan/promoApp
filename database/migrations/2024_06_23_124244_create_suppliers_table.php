@@ -13,6 +13,15 @@ return new class extends Migration
     {
         Schema::create('suppliers', function (Blueprint $table) {
             $table->id();
+            $table->string('name', 50)->nullable();
+            $table->string('email', 50)->nullable();
+            $table->string('api_key', 50);
+            $table->string('password', 100);
+            $table->string('inventory_endpoint', 255);
+            $table->string('po_endpoint', 255);
+            $table->string('shipment_endpoint', 255);
+            $table->string('order_status_endpoint', 255);
+            $table->softDelete();
             $table->timestamps();
         });
     }
