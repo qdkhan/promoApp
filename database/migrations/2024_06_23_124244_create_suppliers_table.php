@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('po_endpoint', 255);
             $table->string('shipment_endpoint', 255);
             $table->string('order_status_endpoint', 255);
-            $table->softDelete();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
