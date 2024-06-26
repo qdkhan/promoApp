@@ -5,7 +5,7 @@
 
     <div class="pagetitle">
         <h1>General Tables</h1>
-        <nav>
+        <nav class="d-flex align-items-center justify-content-between">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="index.html">Home</a></li>
                 <li class="breadcrumb-item">Tables</li>
@@ -43,8 +43,8 @@
                                     <td>28</td>
                                     <td>2016-05-25</td>
                                     <td>
-                                        <a href class="btn btn-sm btn-primary">Edit
-                                            <a href class="btn btn-sm btn-danger">Delete
+                                        <a href class="btn btn-sm btn-primary">Edit </a>
+                                            <a href class="btn btn-sm btn-danger">Delete</a>
                                     </td>
                                 </tr>
                                 <tr>
@@ -54,8 +54,8 @@
                                     <td>35</td>
                                     <td>2014-12-05</td>
                                     <td>
-                                        <a href class="btn btn-sm btn-primary">Edit
-                                            <a href class="btn btn-sm btn-danger">Delete
+                                        <a href class="btn btn-sm btn-primary">Edit</a>
+                                            <a href class="btn btn-sm btn-danger">Delete</a>
                                     </td>
                                 </tr>
                             </tbody>
