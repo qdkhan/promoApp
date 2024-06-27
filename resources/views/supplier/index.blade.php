@@ -2,7 +2,19 @@
 @section('title', 'UC | Enterprises')
 @section('content')
 <main id="main" class="main">
+    @if(session()->has("success"))
+      <div class="alert alert-success alert-dismissible fade show fw-bold mt-2" role="alert">
+         {{session("success")}}
+         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" title="Close"></button>
+      </div>
+   @endif
 
+   @if(session()->has("deleted"))
+      <div class="alert alert-danger alert-dismissible fade show fw-bold mt-2" role="alert">
+         {{session("deleted")}}
+         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" title="Close"></button>
+      </div>
+   @endif
     <div class="pagetitle">
         <h1>General Tables</h1>
         <nav class="d-flex align-items-center justify-content-between">

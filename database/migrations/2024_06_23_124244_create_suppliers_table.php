@@ -21,6 +21,9 @@ return new class extends Migration
             $table->string('po_endpoint', 255);
             $table->string('shipment_endpoint', 255);
             $table->string('order_status_endpoint', 255);
+            $table->string('tolerance')->nullable();
+            $table->string('carrier')->nullable();
+            $table->string('service')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

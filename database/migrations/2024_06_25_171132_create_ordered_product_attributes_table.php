@@ -19,11 +19,13 @@ return new class extends Migration
             $table->string('size', 20);
             $table->string('color', 25);
             $table->mediumInteger('quantity')->default(0);
+            $table->string('order_number')->nullable();
             $table->string('transaction_number', 100)->nullable();
             $table->string('so_number', 50)->nullable();
             $table->string('po_number', 50)->nullable();
             $table->string('carrier', 50)->nullable();
             $table->string('tracking_number', 100)->nullable();
+            $table->string('uom')->default('EA');
             $table->string('order_status', 50)->nullable();
             $table->softDeletes();
             $table->timestamps();

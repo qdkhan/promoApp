@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Supplier;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class SupplierController extends Controller
 {
@@ -28,7 +29,25 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = Validator::make($request->all(), [
+            'name'                      => 'required',
+            'email'                     => 'required',
+            'tolerance'                 => 'required',
+            'carrier'                   => 'required',
+            'service'                   => 'required',
+            'api_key'                   => 'required',
+            'password'                  => 'required',
+            'inventory_endpoint'        => 'required|url',
+            'po_endpoint'               => 'required|url',
+            'shipment_endpoint'   => 'required|url',
+            'order_status_endpoint'     => 'required|url',
+        ]);
+
+        if($validate->fails()) return redirect()->back()->withErrors($validate)->withInput();
+        $data = $request->all();
+        Supplier::create($data);
+
+        return redirect()->route('supplier.index')->with('success', 'Supplier Added successfully.');
     }
 
     /**
