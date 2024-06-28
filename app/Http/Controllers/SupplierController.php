@@ -13,7 +13,8 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        return view('supplier.index');
+        $suppliers = Supplier::all();
+        return view('supplier.index', compact('suppliers'));
     }
 
     /**
@@ -53,9 +54,10 @@ class SupplierController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Supplier $supplier)
-    {
-        //
+    public function show($id)
+    { 
+        $data = Supplier::find($id);
+        return view('supplier.view', compact('data'));
     }
 
     /**

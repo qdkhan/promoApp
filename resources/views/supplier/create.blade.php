@@ -9,7 +9,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="index.html">Home</a></li>
                 <li class="breadcrumb-item">Supplier</li>
-                <li class="breadcrumb-item active">Supplier</li>
+                <li class="breadcrumb-item active">Add</li>
             </ol>
             <a href="{{route('supplier.index')}}" class="btn btn-primary btn-sm"> Show List </a>
         </nav>
@@ -44,7 +44,14 @@
                             <div class="col-6">
                                 <label for="tolerance" class="form-label">Tolerance for PO<spans class="text-danger">*
                                     </spans></label>
-                                <input type="text" class="form-control" id="tolerance" name="tolerance">
+                                {{-- <input type="text" class="form-control" id="tolerance" name="tolerance"> --}}
+                                <select class="form-control" name="tolerance">
+                                    <option value=''>-- Select --</option>
+                                    <option value='AllowOverrun' @if(old ('tolerance') =='AllowOverrun') selected @endif>AllowOverrun</option>
+                                        <option value='AllowUnderrun' @if(old('tolerance') == 'AllowUnderrun') selected @endif>AllowUnderrun</option>
+                                        <option value='AllowOverrunOrUnderrun' @if(old ('tolerance') == 'AllowOverrunOrUnderrun') selected @endif>AllowOverrunOrUnderrun</option>
+                                        <option value='ExactOnly' @if(old ('tolerance') == 'ExactOnly') selected @endif>ExactOnly</option>
+                                </select>
                                 @error('tolerance')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror

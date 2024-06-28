@@ -39,37 +39,31 @@
                         <table class="table table-bordered border-primary">
                             <thead>
                                 <tr>
-                                    <th scope="col">#</th>
                                     <th scope="col">Name</th>
-                                    <th scope="col">Position</th>
-                                    <th scope="col">Age</th>
-                                    <th scope="col">Start Date</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Torelance</th>
+                                    <th scope="col">Inventory Endpoint</th>
+                                    <th scope="col">Po Endpoint</th>
+                                    <th scope="col">Order Shipment Endpoint</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach($suppliers as $data)
                                 <tr>
-                                    <th scope="row">1</th>
-                                    <td>Brandon Jacob</td>
-                                    <td>Designer</td>
-                                    <td>28</td>
-                                    <td>2016-05-25</td>
+                                    <td>{{$data->name}}</td>
+                                    <td>{{$data->email}}</td>
+                                    <td>{{$data->tolerance}}</td>
+                                    <td>{{$data->inventory_endpoint}}</td>
+                                    <td>{{$data->po_endpoint}}</td>
+                                    <td>{{$data->shipment_endpoint}}</td>
                                     <td>
                                         <a href class="btn btn-sm btn-primary">Edit </a>
                                             <a href class="btn btn-sm btn-danger">Delete</a>
+                                            <a href="{{route('supplier.show', $data->id)}}" class="btn btn-sm btn-success">View</a>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Bridie Kessler</td>
-                                    <td>Developer</td>
-                                    <td>35</td>
-                                    <td>2014-12-05</td>
-                                    <td>
-                                        <a href class="btn btn-sm btn-primary">Edit</a>
-                                            <a href class="btn btn-sm btn-danger">Delete</a>
-                                    </td>
-                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
