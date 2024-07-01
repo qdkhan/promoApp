@@ -34,14 +34,11 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Bordered Table</h5>
-                        <!-- Primary Color Bordered Table -->
+                        <h5 class="card-title">Supplier List</h5>
                         <table class="table table-bordered border-primary">
                             <thead>
                                 <tr>
                                     <th scope="col">Name</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Torelance</th>
                                     <th scope="col">Inventory Endpoint</th>
                                     <th scope="col">Po Endpoint</th>
                                     <th scope="col">Order Shipment Endpoint</th>
@@ -52,15 +49,17 @@
                                 @foreach($suppliers as $data)
                                 <tr>
                                     <td>{{$data->name}}</td>
-                                    <td>{{$data->email}}</td>
-                                    <td>{{$data->tolerance}}</td>
                                     <td>{{$data->inventory_endpoint}}</td>
                                     <td>{{$data->po_endpoint}}</td>
                                     <td>{{$data->shipment_endpoint}}</td>
                                     <td>
-                                        <a href class="btn btn-sm btn-primary">Edit </a>
-                                            <a href class="btn btn-sm btn-danger">Delete</a>
-                                            <a href="{{route('supplier.show', $data->id)}}" class="btn btn-sm btn-success">View</a>
+                                        <a href="{{route('supplier.edit', $data->id)}}" class="btn btn-sm btn-primary">Edit </a>
+                                        <form action="{{ route('supplier.destroy', $data->id) }}" method="POST" style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                        </form>
+                                        <a href="{{route('supplier.show', $data->id)}}" class="btn btn-sm btn-success">View</a>
                                     </td>
                                 </tr>
                                 @endforeach

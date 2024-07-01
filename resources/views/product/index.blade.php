@@ -2,10 +2,22 @@
 @section('title', 'UC | Enterprises')
 @section('content')
 <main id="main" class="main">
+    @if(session()->has("success"))
+        <div class="alert alert-success alert-dismissible fade show fw-bold mt-2" role="alert">
+            {{session("success")}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" title="Close"></button>
+        </div>
+    @endif
+
+    @if(session()->has("deleted"))
+        <div class="alert alert-danger alert-dismissible fade show fw-bold mt-2" role="alert">
+            {{session("deleted")}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" title="Close"></button>
+        </div>
+    @endif
 
     <div class="pagetitle">
-        <h1>General Tables</h1>
-        <nav>
+        <nav class="d-flex align-items-center justify-content-between">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="index.html">Home</a></li>
                 <li class="breadcrumb-item">Tables</li>
@@ -22,42 +34,37 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Bordered Table</h5>
+                        <h5 class="card-title">Product List</h5>
                         <!-- Primary Color Bordered Table -->
                         <table class="table table-bordered border-primary">
                             <thead>
                                 <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Position</th>
-                                    <th scope="col">Age</th>
-                                    <th scope="col">Start Date</th>
+                                    <th scope="col">Product Name</th>
+                                    <th scope="col">Supplier</th>
+                                    <th scope="col">Product SKU</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Brandon Jacob</td>
-                                    <td>Designer</td>
-                                    <td>28</td>
-                                    <td>2016-05-25</td>
-                                    <td>
-                                        <a href class="btn btn-sm btn-primary">Edit
-                                            <a href class="btn btn-sm btn-danger">Delete
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Bridie Kessler</td>
-                                    <td>Developer</td>
-                                    <td>35</td>
-                                    <td>2014-12-05</td>
-                                    <td>
-                                        <a href class="btn btn-sm btn-primary">Edit
-                                            <a href class="btn btn-sm btn-danger">Delete
-                                    </td>
-                                </tr>
+                                @foreach($products as $product)
+                                    <tr>
+                                        <td>{{$product->name}}</td>
+                                        <td>{{$product->supplier->name}}</td>
+                                        <td>{{$product->product_sku}}</td>
+                                        <td>
+                                            <a href="{{route('product.edit', $product->id)}}"
+                                                class="btn btn-sm btn-primary">Edit </a>
+                                            <form action="{{ route('product.destroy', $product->id) }}" method="POST"
+                                                style="display:inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                            </form>
+                                            <a href="{{route('product.show', $product->id)}}"
+                                                class="btn btn-sm btn-success">View</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

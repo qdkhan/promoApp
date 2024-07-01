@@ -40,7 +40,7 @@ class SupplierController extends Controller
             'password'                  => 'required',
             'inventory_endpoint'        => 'required|url',
             'po_endpoint'               => 'required|url',
-            'shipment_endpoint'   => 'required|url',
+            'shipment_endpoint'         => 'required|url',
             'order_status_endpoint'     => 'required|url',
         ]);
 
@@ -63,9 +63,10 @@ class SupplierController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Supplier $supplier)
+    public function edit($id)
     {
-        //
+        $data = Supplier::find($id);
+        return view('supplier.edit', compact('data'));
     }
 
     /**
@@ -73,7 +74,26 @@ class SupplierController extends Controller
      */
     public function update(Request $request, Supplier $supplier)
     {
-        //
+        $validate = Validator::make($request->all(), [
+            'name'                      => 'required',
+            'email'                     => 'required',
+            'tolerance'                 => 'required',
+            'carrier'                   => 'required',
+            'service'                   => 'required',
+            'api_key'                   => 'required',
+            'password'                  => 'required',
+            'inventory_endpoint'        => 'required|url',
+            'po_endpoint'               => 'required|url',
+            'shipment_endpoint'         => 'required|url',
+            'order_status_endpoint'     => 'required|url',
+        ]);
+
+        if($validate->fails()) return redirect()->back()->withErrors($validate)->withInput();
+        
+        $data = $request->all();
+        $supplier->update($data);
+        return redirect()->route('supplier.index')->with('success', 'Supplier updated successfully.');
+
     }
 
     /**
@@ -81,6 +101,7 @@ class SupplierController extends Controller
      */
     public function destroy(Supplier $supplier)
     {
-        //
+        $supplier->delete();
+        return redirect()->route('supplier.index')->with('success', 'Supplier deleted successfully.');
     }
 }
