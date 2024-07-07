@@ -49,7 +49,7 @@
                                 @foreach($products as $product)
                                     <tr>
                                         <td>{{$product->name}}</td>
-                                        <td>{{$product->supplier->name}}</td>
+                                        <td>{{ isset($product->supplier) ? $product->supplier->name : ''}}</td>
                                         <td>{{$product->product_sku}}</td>
                                         <td>
                                             <a href="{{route('product.edit', $product->id)}}"

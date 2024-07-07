@@ -15,5 +15,12 @@
          </a>
       </li>
 
+      <li class="nav-item active">
+         <a class="nav-link collapsed" href="{{route('product_attribute.index')}}">
+         <i class="bi bi-journal-text"></i>
+         <span>Product Attribute</span>
+         </a>
+      </li>
+
    </ul>
 </aside>
