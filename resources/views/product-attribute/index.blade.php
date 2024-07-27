@@ -3,18 +3,18 @@
 @section('content')
 <main id="main" class="main">
     @if(session()->has("success"))
-      <div class="alert alert-success alert-dismissible fade show fw-bold mt-2" role="alert">
-         {{session("success")}}
-         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" title="Close"></button>
-      </div>
-   @endif
+        <div class="alert alert-success alert-dismissible fade show fw-bold mt-2" role="alert">
+            {{session("success")}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" title="Close"></button>
+        </div>
+    @endif
 
-   @if(session()->has("deleted"))
-      <div class="alert alert-danger alert-dismissible fade show fw-bold mt-2" role="alert">
-         {{session("deleted")}}
-         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" title="Close"></button>
-      </div>
-   @endif
+    @if(session()->has("deleted"))
+        <div class="alert alert-danger alert-dismissible fade show fw-bold mt-2" role="alert">
+            {{session("deleted")}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" title="Close"></button>
+        </div>
+    @endif
     <div class="pagetitle">
         <h1>General Tables</h1>
         <nav class="d-flex align-items-center justify-content-between">
@@ -23,7 +23,10 @@
                 <li class="breadcrumb-item">Tables</li>
                 <li class="breadcrumb-item active">General</li>
             </ol>
-            <a href="{{route('product_attribute.create')}}" class="btn btn-sm btn-primary"><i class="ri-add-circle-line"></i> Add Attribute</a>
+            <button id="collectAttrId" class="btn btn-sm btn-warning"><i class="ri-add-circle-line"></i>Check
+                Availability</button>
+            <a href="{{route('product_attribute.create')}}" class="btn btn-sm btn-primary"><i
+                    class="ri-add-circle-line"></i> Add Attribute</a>
         </nav>
     </div><!-- End Page Title -->
 
@@ -38,6 +41,7 @@
                         <table class="table table-bordered border-primary">
                             <thead>
                                 <tr>
+                                    <th scope="col">#</th>
                                     <th scope="col">Product Name</th>
                                     <th scope="col">Supplier Name</th>
                                     <th scope="col">Part Id</th>
@@ -49,23 +53,34 @@
                             </thead>
                             <tbody>
                                 @foreach($productAttributes as $data)
-                                <tr>
-                                    <td>{{$data->product->name}}</td>
-                                    <td>{{$data->supplier->name}}</td>
-                                    <td>{{$data->part_id}}</td>
-                                    <td>{{$data->size}}</td>
-                                    <td>{{$data->color}}</td>
-                                    <td>{{$data->quantity}}</td>
-                                    <td>
-                                        <a href="{{route('product_attribute.edit', $data->id)}}" class="btn btn-sm btn-primary">Edit </a>
-                                        <form action="{{ route('product_attribute.destroy', $data->id) }}" method="POST" style="display:inline;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                                        </form>
-                                        <a href="{{route('product_attribute.show', $data->id)}}" class="btn btn-sm btn-success">View</a>
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="form-check">
+                                                <input class="form-check-input attr-detail" type="checkbox"
+                                                    data-part_id="{{$data->part_id}}"
+                                                    data-product_id="{{$data->product->id}}"
+                                                    data-supplier_id="{{$data->supplier->id}}">
+                                            </div>
+                                        </td>
+                                        <td>{{$data->product->name}}</td>
+                                        <td>{{$data->supplier->name}}</td>
+                                        <td>{{$data->part_id}}</td>
+                                        <td>{{$data->size}}</td>
+                                        <td>{{$data->color}}</td>
+                                        <td>{{$data->quantity}}</td>
+                                        <td>
+                                            <a href="{{route('product_attribute.edit', $data->id)}}"
+                                                class="btn btn-sm btn-primary">Edit </a>
+                                            <form action="{{ route('product_attribute.destroy', $data->id) }}" method="POST"
+                                                style="display:inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                            </form>
+                                            <a href="{{route('product_attribute.show', $data->id)}}"
+                                                class="btn btn-sm btn-success">View</a>
+                                        </td>
+                                    </tr>
                                 @endforeach
                             </tbody>
                         </table>
@@ -76,4 +91,36 @@
     </section>
 
 </main><!-- End #main -->
+
+<script>
+    $(document).ready(function () {
+        $('#collectAttrId').click(function () {
+            var partId = [];
+            var productId = '';
+            var supplierId = '';
+            var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+            $('.attr-detail').each(function () {
+                productId = $(this).attr('data-product_id');
+                supplierId = $(this).attr('data-supplier_id');
+                partId.push($(this).attr('data-part_id'));
+            });
+
+ 
+
+            $.ajax({
+                url: 'check-data',
+                method: ,
+                data: { _toke: csrfToken, partId: JSON.stringify(partId), supplierId: supplierId, productId: productId}
+                success: function(data) {
+                    consol.log(data)
+                },
+                error: function(xhr) {
+                    console.error(xhr.responseText);
+                }
+
+            })
+        })
+    });
+</script>
 @endsection

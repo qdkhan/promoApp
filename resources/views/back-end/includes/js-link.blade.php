@@ -7,3 +7,4 @@
 <script src="{{url('back-end/tinymce/tinymce.min.js')}}"></script>
 <script src="{{url('back-end/php-email-form/validate.js')}}"></script>
 <script src="{{url('back-end/js/main.js')}}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
