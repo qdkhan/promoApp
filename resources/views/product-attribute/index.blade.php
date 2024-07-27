@@ -106,14 +106,15 @@
                 partId.push($(this).attr('data-part_id'));
             });
 
- 
-
             $.ajax({
-                url: 'check-data',
-                method: ,
-                data: { _toke: csrfToken, partId: JSON.stringify(partId), supplierId: supplierId, productId: productId}
+                url : "{{ route('inventoryAvailability') }}",
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken
+                },
+                data: { _toke: csrfToken, partId: JSON.stringify(partId), supplierId: supplierId, productId: productId},
                 success: function(data) {
-                    consol.log(data)
+                    console.log(data)
                 },
                 error: function(xhr) {
                     console.error(xhr.responseText);

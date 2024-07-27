@@ -33,14 +33,15 @@ class ProductAttributeController extends Controller
     public function store(Request $request)
     {
         $validate = Validator::make($request->all(), [
-            'product_id'    => 'required',
-            'part_id'       => 'required',
-            'size'          => 'required',
-            'color'         => 'required',
-            'quantity'      => 'required',
+            'product_id' => 'required',
+            'part_id' => 'required',
+            'size' => 'required',
+            'color' => 'required',
+            'quantity' => 'required',
         ]);
 
-        if($validate->fails()) return redirect()->back()->withErrors($validate)->withInput();
+        if ($validate->fails())
+            return redirect()->back()->withErrors($validate)->withInput();
 
         $supplier_id = Product::find($request->product_id)->value('supplier_id');
         $data = $request->all();
@@ -56,7 +57,7 @@ class ProductAttributeController extends Controller
     public function show($id)
     {
         $productAttribute = ProductAttribute::with('product', 'supplier')->find($id);
-        return view('product-attribute.view', compact('productAttribute')); 
+        return view('product-attribute.view', compact('productAttribute'));
     }
 
     /**
@@ -66,7 +67,7 @@ class ProductAttributeController extends Controller
     {
         $products = Product::select('id', 'name')->get();
         $productAttribute = ProductAttribute::with('product', 'supplier')->find($id);
-        return view('product-attribute.edit', compact('products', 'productAttribute')); 
+        return view('product-attribute.edit', compact('products', 'productAttribute'));
     }
 
     /**
@@ -75,14 +76,15 @@ class ProductAttributeController extends Controller
     public function update(Request $request, ProductAttribute $productAttribute)
     {
         $validate = Validator::make($request->all(), [
-            'product_id'    => 'required',
-            'part_id'       => 'required',
-            'size'          => 'required',
-            'color'         => 'required',
-            'quantity'      => 'required',
+            'product_id' => 'required',
+            'part_id' => 'required',
+            'size' => 'required',
+            'color' => 'required',
+            'quantity' => 'required',
         ]);
 
-        if($validate->fails()) return redirect()->back()->withErrors($validate)->withInput();
+        if ($validate->fails())
+            return redirect()->back()->withErrors($validate)->withInput();
 
         $supplier_id = Product::find($request->product_id)->value('supplier_id');
         $data = $request->all();
@@ -99,5 +101,27 @@ class ProductAttributeController extends Controller
     {
         $productAttribute->delete();
         return redirect()->route('product_attribute.index')->with('success', 'Product attribute deletedsuccessfully.');
+    }
+
+    public function checkInventory(Request $request)
+    {
+        $partIds = json_decode($request->input('partId'));
+        $supplierId = $request->input('supplierId');
+        $productId = $request->input('productId');
+
+        // Perform your logic here (e.g., check inventory, etc.)
+        // For example, let's assume you have some inventory data to return:
+        $inventoryData = [
+            'productId' => $productId,
+            'supplierId' => $supplierId,
+            'partIds' => $partIds,
+            'availability' => true // Just a dummy example
+        ];
+
+        // Return a JSON response
+        return response()->json([
+            'status' => 'success',
+            'data' => $inventoryData
+        ]);
     }
 }

@@ -11,6 +11,9 @@ Route::get('/', function () {
 
 Route::resource('/supplier', SupplierController::class);
 Route::resource('/product', ProductController::class);
+
+Route::post('inventory_availability', [ProductAttributeController::class, 'checkInventory'])->name('inventoryAvailability');
 Route::resource('product_attribute', ProductAttributeController::class);
+
 
 
