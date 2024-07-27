@@ -112,7 +112,7 @@
                 headers: {
                     'X-CSRF-TOKEN': csrfToken
                 },
-                data: { _toke: csrfToken, partId: JSON.stringify(partId), supplierId: supplierId, productId: productId},
+                data: { partId: JSON.stringify(partId), supplierId: supplierId, productId: productId},
                 success: function(data) {
                     console.log(data)
                 },
